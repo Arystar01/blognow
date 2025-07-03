@@ -1,5 +1,7 @@
-import { auth } from "@clerk/nextjs/dist/types/server";
-import mongoose from "mongoose";
+import mongoose from "mongoose";    
+import User from "./UserModel";
+import Comment from "./Comment";
+
 
 const BlogSchema= new mongoose.Schema({
     authorClerkId: {

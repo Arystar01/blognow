@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import Blog from "./BlogModel";
+
 
 const UserSchema = new mongoose.Schema({
     clerkID: {

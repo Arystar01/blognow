@@ -1,18 +1,18 @@
 'use client'
 import React, { useState } from 'react'
 import SearchBar from '@/app/components/SearchBar'
-import {
-  SignInButton,
-  SignedOut,
-  SignedIn,
-  UserButton,
-  SignUpButton
-} from '@clerk/nextjs'
 import Link from 'next/link'
 import { HiMenuAlt4 } from 'react-icons/hi'
 import { IoClose } from 'react-icons/io5'
+import { useUser, useClerk, SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
+import { FaUserCircle } from "react-icons/fa";
+
 
 const Navbar = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+const { user } = useUser();
+const { signOut } = useClerk();
+
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
 
   const navLinks = [
@@ -69,19 +69,42 @@ const Navbar = () => {
           </SignedOut>
 
           <SignedIn>
-            <UserButton
-              afterSignOutUrl="/"
-              appearance={{
-                elements: {
-                  userButtonAvatarBox: 'h-10 w-10',
-                  userPreviewAvatarIcon: 'h-10 w-10',
-                  userPreviewActionButton: 'h-12 w-12',
-                  userPreviewActionButtonText: 'text-base',
-                  userPreviewActionButtonIcon: 'text-base'
-                }
-              }}
-            />
+            <div className="relative">
+              <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="text-3xl focus:outline-none"
+              >
+                <FaUserCircle />
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded shadow z-150">
+                  <ul className="flex flex-col text-left text-sm">
+                    <li>
+                      <Link
+                        href={`/profile/${user?.id}`}
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => {
+                          setIsDropdownOpen(false);
+                          signOut();
+                        }}
+                        className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+                      >
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
           </SignedIn>
+
 
           {/* Hamburger Icon - Mobile Only */}
           <button onClick={toggleMobileNav} className="md:hidden text-4xl">
@@ -92,9 +115,8 @@ const Navbar = () => {
 
       {/* Mobile Sidebar Menu */}
       <div
-        className={`fixed top-0 left-0 h-full w-1/2 bg-white dark:bg-black shadow-lg transform transition-transform duration-300 z-40 md:hidden ${
-          isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        className={`fixed top-0 left-0 h-full w-1/2 bg-white dark:bg-black shadow-lg transform transition-transform duration-300 z-40 md:hidden ${isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
       >
         {/* Close Button */}
         <div className="flex justify-between items-center p-4 border-b border-gray-300 dark:border-gray-700">

@@ -1,15 +1,20 @@
 import { NextResponse } from "next/server";
-import blog from "@/models/BlogModel";
+import Blog from "@/models/BlogModel";
 import { connectDB } from "@/lib/db";
 
-export async function GET(req, res) {
+export async function GET(req, { params }) {
   try {
     await connectDB();
-    const category = req.url.split("/").pop();
-    const dailyBlogs = await blog.find({ category: category });
-    const breakingBlogs = await blog.findOne({ breaking: true , category: category });
-    return NextResponse.json({ dailyBlogs, breakingBlogs });
+
+    const category = params.category?.toLowerCase(); // Normalize if stored as lowercase
+    console.log("Category requested:", category);
+
+    const dailyBlogs = await Blog.find({ category });
+    const breakingBlogs = await Blog.find({ category, breaking: true });
+
+    return NextResponse.json({ dailyBlogs, breakingBlogs }, { status: 200 });
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching category blogs:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
