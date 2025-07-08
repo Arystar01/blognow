@@ -4,7 +4,7 @@ import { IncomingForm } from 'formidable';
 import { promises as fs } from 'fs'; // For file system operations (reading temp file)
 import path from 'path';
 import { v2 as cloudinary } from 'cloudinary'; // Cloudinary SDK
-import dbConnect from '../../../lib/db.js'; // Adjust the path to your dbConnect function
+import dbConnect from '@/lib/db'; // Adjust the path to your dbConnect function
 import Blog from '@/models/BlogModel.js';
 export const config = {
   api: {
