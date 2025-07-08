@@ -25,7 +25,8 @@ const commentSchema = new mongoose.Schema({
     replies: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment'
-    }]
+    }],parentComment: { type: mongoose.Schema.Types.ObjectId, ref: 'Comment', default: null }, // 👈 add this
+ 
 });
 
 export const Comment = mongoose.models.Comment || mongoose.model('Comment', commentSchema);

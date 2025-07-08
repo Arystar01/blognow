@@ -1,51 +1,62 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
 
-const BlogCart = ({ title, content, author, category, ProfilePictue,date, breaking, MainPicture, _id }) => {
-  
+const BlogCart = ({
+  title,
+  content,
+  author,
+  category,
+  ProfilePictue,
+  date,
+  breaking,
+  MainPicture,
+  _id,
+}) => {
   return (
-    <div className='w-full  bg-white p-4 rounded-lg shadow-lg flex flex-col gap-4'>
-      {/* Top metadata */}
-      <div className='flex justify-between text-sm sm:text-xs text-gray-500'>
-        <span>{category} / 2 min read</span>
-        {breaking && <span className='text-red-600 font-semibold'>Breaking</span>}
+    <div className="w-full bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col gap-4">
+      {/* Metadata row */}
+      <div className="flex justify-between text-sm text-gray-500">
+        <span className="capitalize">
+          {category} • <span className="italic">2 min read</span>
+        </span>
+        {breaking && <span className="text-red-600 font-semibold">🔥 Breaking</span>}
       </div>
 
       {/* Title */}
-      <h2 className="text-xl sm:text-2xl font-bold h-20 overflow-hidden">
-        {title}
-      </h2>
-      {/* Main Image */}
-      {/* {MainPicture && (
-        <div className='w-full h-88 overflow-hidden rounded-md'>
-          <img src='/DarkThem.png' alt="Blog Main" className='w-full h-full object-cover hover:scale-110 transition-transform duration-300' />
-        </div>
-      )} */}
+      <h2 className="text-2xl font-bold text-gray-900 line-clamp-2">{title}</h2>
+
+      {/* Blog Image */}
       {MainPicture && (
-        <Link href={`/${category}/${_id}`}>
-        <div className="w-full h-64 sm:h-88 overflow-hidden rounded-md">
-          <img
-            src={MainPicture || '/DarkThem.png'}
-            alt="Blog Main"
-            className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
-          />
-        </div>
+        <Link href={`/${category}/${_id}`} className="block group">
+          <div className="w-full h-60 sm:h-72 overflow-hidden rounded-lg">
+            <img
+              src={MainPicture || '/DarkThem.png'}
+              alt="Blog Main"
+              className="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300 ease-in-out"
+            />
+          </div>
         </Link>
       )}
 
       {/* Content Preview */}
-           <p className="text-gray-700 text-xl  sm:text-4xl line-clamp-4 sm:line-clamp-4">
+      <p className="text-gray-700 text-base sm:text-lg line-clamp-3 leading-relaxed">
         {content}
       </p>
 
-
-     
-      <div className="flex gap-4 items-center text-xl sm:text-xl text-gray-500 pt-2 border-t">
-        <span>Photo</span>
-        <span className="font-extrabold">
-          By <a href="/">{author}</a>
-        </span>
-        <span className="text-black font-bold">{date}</span>
+      {/* Author Info */}
+      <div className="flex items-center gap-3  border-t border-gray-200 pt-4 text-sm text-gray-600">
+        <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-300">
+          <img
+            src={ProfilePictue || '/default-avatar.png'}
+            alt={author}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="flex flex-col">
+          <span className="font-semibold text-gray-800">{author}</span>
+          <span className="text-xs text-gray-500">{date}</span>
+        </div>
       </div>
     </div>
   );

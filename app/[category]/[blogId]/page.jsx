@@ -1,31 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import CommentDialog from "@/app/components/CommentDialog";
 
 const Page = () => {
   const params = useParams();
   const blogId = params.blogId;
   const category = params.category;
-    const [readIcon, setReadIcon] = useState(false);
+  const [readIcon, setReadIcon] = useState(false);
   const [blogDetails, setBlogDetails] = useState(null);
-
-  const dummyData = {
-    _id: "1",
-    title: "Breaking News: Major Breakthrough in AI Research",
-    content:
-      "Scientists have announced a significant breakthrough in artificial intelligence, potentially leading to advanced self-learning systems. This development could revolutionize various industries.",
-    category: "Breaking News",
-    breaking: true,
-    views: 100,
-    likes: 50,
-    comments: 20,
-    MainPicture: "/DarkThem.png",
-    date: "2021-01-01",
-    author: {
-      name: "John Doe",
-      profilePicture: "https://via.placeholder.com/50",
-    },
-  };
+  const [comments, setComments] = useState();
 
   useEffect(() => {
     try {
@@ -49,7 +33,7 @@ const Page = () => {
         blogDetails.title +
         ". " +
         "Now Content - " +
-        blogDetails.content; // or combine more if needed
+        blogDetails.content;
       const word = new SpeechSynthesisUtterance(fullContent);
       word.lang = "en-US";
       word.volume = 1;
@@ -66,75 +50,88 @@ const Page = () => {
   };
 
   const stopSpeaking = () => {
-    speechSynthesis.cancel(); // stops speech immediately
+    speechSynthesis.cancel();
   };
+
+  const handleCommentDialog = () => {
+    console.log("Open comment dialog");
+  };
+
   if (!blogDetails) return <div className="text-center mt-10">Loading...</div>;
 
   return (
-    
-    <div className="w-full   ">
-      <div className="relative w-screen h-96 sm:h-[900px] flex justify-center items-center overflow-hidden">
-        {/* Background Image with reduced opacity */}
+    <div className="w-full bg-gray-100 text-black">
+      {/* Hero section with background image */}
+      <div className="relative w-screen h-96 sm:h-[700px] flex justify-center items-center overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-90"
+          className="absolute inset-0 bg-cover bg-center opacity-80"
           style={{ backgroundImage: `url(${blogDetails.MainPicture})` }}
         ></div>
 
-        {/* Foreground Text Content */}
-        <div className="relative z-10 flex flex-col gap-2 justify-center items-center sm:gap-10">
-          <h1 className="">{blogDetails.authorname}</h1>
-          <div className="text-xl font-bold sm:6xl text-center px-4 sm:w-[calc(60%)]">
-            {blogDetails.title}
-          </div>
-          <h1 className=" text-lg  text-black sm:text-2xl text-center">
+        <div className="relative z-10 text-white text-center px-4 sm:px-0">
+          <h1 className="text-xl sm:text-2xl font-semibold">{blogDetails.authorname}</h1>
+          <h2 className="text-3xl sm:text-5xl font-bold mt-4">{blogDetails.title}</h2>
+          <p className="mt-4 text-lg sm:text-2xl font-medium italic">
             in {blogDetails.category}
-          </h1>
+          </p>
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 px-8 py-8 w-screen mx-auto">
+
+      {/* Blog body and sidebar */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-6 sm:px-12 py-12 max-w-7xl mx-auto">
         {/* Main Content */}
-        <div className="col-span-1 lg:col-span-2    bg-red-300  ">
-          <div className="pl-8 pt-4">
-            <button onClick={handleSpeakOut}  className="bg-gray-300 rounded-md p-4">🔊 Read it out</button>
-            {readIcon &&  <button
-              onClick={stopSpeaking}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+        <div className="col-span-1 lg:col-span-2 bg-white rounded-lg shadow-md p-6">
+          <div className="flex gap-4 mb-6">
+            <button
+              onClick={handleSpeakOut}
+              className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition"
             >
-              🛑 Stop
-            </button> }
-           
+              🔊 Read it out
+            </button>
+            {readIcon && (
+              <button
+                onClick={stopSpeaking}
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+              >
+                🛑 Stop
+              </button>
+            )}
           </div>
 
-          <p className="text-gray-700 text-lg leading-relaxed  p-4 pr-8 pl-8  text-justify sm:text-4xl">
-            {/* Your long paragraph content goes here */}
+          <div className="text-gray-800 text-lg leading-relaxed text-justify space-y-4">
             {blogDetails.content}
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum eum
-            modi deserunt, ex sapiente aut consequatur nam libero rem vel
-            voluptates placeat eligendi alias fugiat harum dolor explicabo
-            exercitationem, dicta ea ab nihil quidem illo tenetur porro!
-            Aliquid, nostrum nisi assumenda reprehenderit omnis deserunt autem,
-            delectus, quos quam temporibus est.
-          </p>
-          <div className="flex justify-between items-center px-8 py-4 border-t">
-            <button>Like </button>
-            <button>Comment</button>
-            <button>Share</button>
           </div>
+
+          <div className="flex justify-between items-center mt-8 pt-4 border-t">
+            <button className="text-blue-600 hover:underline">👍 Like</button>
+            <button
+              onClick={() => setComments(!comments)}
+              className="text-blue-600 hover:underline"
+            >
+              💬 Comment
+            </button>
+            <button className="text-blue-600 hover:underline">🔗 Share</button>
+          </div>
+
+          {comments && <CommentDialog props={{ blogId }} />}
         </div>
 
-        {/* Breaking News Sticky Section */}
-        <div className="col-span-1 w-[calc(90%)] bg-amber-50 hidden lg:block p-4 rounded shadow ml-10">
-          <div className="sticky top-24">
-            <div className="relative">
+        {/* Sidebar / Breaking News */}
+        <div className="col-span-1 hidden lg:block">
+          <div className="sticky top-24 bg-white p-4 rounded shadow-md">
+            <div className="relative mb-4">
               <span className="absolute top-2 left-2 bg-orange-600 text-white text-xs px-2 py-1 font-bold rounded">
                 BREAKING
               </span>
               <img
                 src="https://via.placeholder.com/300x300"
                 alt="Breaking"
-                className="w-full h-auto rounded shadow"
+                className="w-full h-auto rounded"
               />
             </div>
+            <p className="text-sm text-gray-700">
+              Stay tuned for the latest science updates, innovations, and tech insights.
+            </p>
           </div>
         </div>
       </div>

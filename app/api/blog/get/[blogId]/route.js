@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { connectDB } from '@/lib/db';
 import Blog from '@/models/BlogModel';
+
+
 export async function GET(req, { params }) {
     try {
         await connectDB();
-        const blog = await Blog.findById(params.blogId);
+        const { blogId } =  await params;
+        const blog = await Blog.findById(blogId);
+
         if (!blog) {
             return NextResponse.json({ message: "Blog not found" }, { status: 404 });
         }

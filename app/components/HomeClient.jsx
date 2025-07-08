@@ -34,7 +34,7 @@ export default function HomeClient({ user }) {
   }, []);
 
   return (
-    <div className="bg-gray-400">
+    <div className="bg-gray-400 h-full min-h-screen">
       <h1>Welcome, {user?.username || 'Guest'}!</h1>
       <div className="text-sm text-gray-500 mb-2">
         ID: {user?._id} <br />

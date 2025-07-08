@@ -1,4 +1,7 @@
+
 // app/page.jsx
+
+import React from 'react';
 import { initUserInDB } from '@/lib/initUser';
 import HomeClient from './components/HomeClient';
 
