@@ -2,3 +2,7 @@
 [id] {
   scroll-margin-top: 7rem; /* same as h-28 */
 }   
+/* globals.css or equivalent */
+html, body {
+  overflow-x: hidden;
+}

@@ -34,17 +34,17 @@ export default function HomeClient({ user }) {
   }, []);
 
   return (
-    <div>
+    <div className="bg-gray-400">
       <h1>Welcome, {user?.username || 'Guest'}!</h1>
       <div className="text-sm text-gray-500 mb-2">
         ID: {user?._id} <br />
         ClerkID: {user?.clerkID}
       </div>
 
-      <div className="pt-24 px-8 w-[calc(90%)]">
+      <div className="pt-24 px-8  flex  justify-center items-center gap-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* Daily Blogs */}
-          <div className="col-span-1 lg:col-span-2 flex flex-wrap justify-between gap-4">
+          <div className="col-span-1 flex flex-wrap lg:col-span-2  justify-between gap-4">
             {blogList.map((blog) => (
               <div key={blog._id} className="w-full lg:w-[48%]">
                 <BlogCart

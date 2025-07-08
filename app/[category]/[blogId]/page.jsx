@@ -76,7 +76,7 @@ const Page = () => {
       <div className="relative w-screen h-96 sm:h-[900px] flex justify-center items-center overflow-hidden">
         {/* Background Image with reduced opacity */}
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-40"
+          className="absolute inset-0 bg-cover bg-center opacity-90"
           style={{ backgroundImage: `url(${blogDetails.MainPicture})` }}
         ></div>
 
@@ -115,6 +115,11 @@ const Page = () => {
             Aliquid, nostrum nisi assumenda reprehenderit omnis deserunt autem,
             delectus, quos quam temporibus est.
           </p>
+          <div className="flex justify-between items-center px-8 py-4 border-t">
+            <button>Like </button>
+            <button>Comment</button>
+            <button>Share</button>
+          </div>
         </div>
 
         {/* Breaking News Sticky Section */}

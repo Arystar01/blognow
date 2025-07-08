@@ -115,7 +115,7 @@ const { signOut } = useClerk();
 
       {/* Mobile Sidebar Menu */}
       <div
-        className={`fixed top-0 left-0 h-full w-1/2 bg-white dark:bg-black shadow-lg transform transition-transform duration-300 z-40 md:hidden ${isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed top-0 left-0 h-full w-1/2 bg-white dark:bg-red-200 shadow-lg transform transition-transform duration-300 z-40 md:hidden ${isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
       >
         {/* Close Button */}
@@ -149,7 +149,7 @@ const { signOut } = useClerk();
       {isMobileNavOpen && (
         <div
           onClick={toggleMobileNav}
-          className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+          className="fixed inset-0  bg-opacity-50 z-30 md:hidden"
         />
       )}
     </>

@@ -34,12 +34,12 @@ const Page = () => {
   }, [category]);
 
   return (
-    <div className="flex flex-cols  justify-center items-center gap-4">
-    <div className=" min-h-screen  flex flex-col items-center bg-white">
+    <div className="flex flex-cols justify-center items-center gap-4 bg-gray-400">
+      <div className=" min-h-screen  flex flex-col items-center ">
         {/* Fixed Navbar */}
-      <div className="fixed flex justify-between items-center px-8 text-center text-2xl bg-black text-white w-full h-28 md:h-20 ">
-        {" "}
-        {/* Left Side: Category */}
+        <div className="fixed flex justify-between items-center px-8 text-center text-2xl bg-black text-white w-full h-28 md:h-20 ">
+          {" "}
+          {/* Left Side: Category */}
           <div className="font-semibold">{category}</div>
           <div className="flex items-center gap-4">
             <span className="mr-2 text-lg hidden sm:inline">Share your love</span>
@@ -52,31 +52,31 @@ const Page = () => {
         </div>
 
         {/* Main Content */}
-      <div className="pt-24 px-8 w-full    " >
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Left side of grid for Daily Blogs */}
-          <div className="col-span-1 lg:col-span-2 flex flex-wrap justify-between gap-4">
-            {dailyBlogs.map((blog) => (
-             
-           <div  className="w-[calc(100%)]  lg:w-[calc(48%)] ">
-
+        <div className="pt-24 px-8 ">
+          <div className="grid grid-cols-1 mt-10 lg:grid-cols-3  gap-10">
+            {/* Left side of grid for Daily Blogs */}
+            <div className="col-span-1 flex flex-wrap lg:col-span-3 justify-between gap-4">
+              {/* This is the key change: `grid grid-cols-1 md:grid-cols-3` */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+                {dailyBlogs.map((blog) => (
                   <BlogCart
+                    key={blog._id} // Added key prop for list rendering
                     _id={blog._id}
                     title={blog.title}
                     content={blog.content}
                     author={blog.author?.username || blog.author?.name || "Unknown"}
                     category={blog.category}
                     date={blog.createdAt || blog.date}
-                    ProfilePictue={blog.author?.profilePicture}
+                    ProfilePicture={blog.author?.profilePicture}
                     breaking={blog.breaking}
                     MainPicture={blog.MainPicture}
                   />
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
-            {/* Breaking News */}
-            <div className="col-span-1 w-[90%] bg-amber-50 hidden lg:block p-4 rounded shadow ml-10">
+            {/* Breaking News - uncomment if needed */}
+            {/* <div className="col-span-1 w-[90%] bg-amber-50 hidden lg:block p-4 rounded shadow ml-10">
               <h3 className="text-lg font-bold mb-2">Breaking News</h3>
               {breakingBlogs.length === 0 ? (
                 <p className="text-gray-600">No breaking news currently.</p>
@@ -90,7 +90,7 @@ const Page = () => {
                   </div>
                 ))
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

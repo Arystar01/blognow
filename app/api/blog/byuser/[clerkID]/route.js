@@ -5,7 +5,7 @@ import Blog from "@/models/BlogModel";
 
 export async function GET(req, context) {
     await connectDB();
-  const { clerkID } = context.params; // ✅ This avoids the sync error
+  const { clerkID } =  await context.params; // ✅ This avoids the sync error
 
   const user = await User.findOne({ clerkID }).populate("MyBlogs");
   if (!user) {

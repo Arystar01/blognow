@@ -4,7 +4,7 @@ import Link from 'next/link';
 const BlogCart = ({ title, content, author, category, ProfilePictue,date, breaking, MainPicture, _id }) => {
   
   return (
-    <div className='w-full bg-white p-4 rounded-lg shadow-lg flex flex-col gap-4'>
+    <div className='w-full  bg-white p-4 rounded-lg shadow-lg flex flex-col gap-4'>
       {/* Top metadata */}
       <div className='flex justify-between text-sm sm:text-xs text-gray-500'>
         <span>{category} / 2 min read</span>
@@ -25,7 +25,7 @@ const BlogCart = ({ title, content, author, category, ProfilePictue,date, breaki
         <Link href={`/${category}/${_id}`}>
         <div className="w-full h-64 sm:h-88 overflow-hidden rounded-md">
           <img
-            src='/DarkThem.png'
+            src={MainPicture || '/DarkThem.png'}
             alt="Blog Main"
             className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
           />
