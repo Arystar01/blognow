@@ -3,10 +3,11 @@ import React from 'react'
 import axios from 'axios';
 
 function page() {
+  const API_KEY = process.env.NEXT_PUBLIC_NEWS_API_KEY;
     const handleClick = async () => {
         // console.log("Button clicked!");
         try {
-            const res= await  axios.get( "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=055e28d93abb4f059730b9b7c29a39fd");
+            const res= await  axios.get( `https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=${API_KEY}`);
             // console.log("res" ,res);
         } catch (error) {
             console.error("Error fetching news:", error);

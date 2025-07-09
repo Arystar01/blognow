@@ -17,6 +17,7 @@ const Page = () => {
   const [breakingBlogs, setBreakingBlogs] = useState([]);
   const [topHeadlines, setTopHeadlines] = useState([]);
   const [loading, setLoading] = useState(true);
+  const API_KEY = process.env.NEXT_PUBLIC_NEWS_API_KEY;
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -49,7 +50,7 @@ const Page = () => {
         setLoading(true);
         const categoryToUse = fallback ? 'general' : category;
         const response = await axios.get(
-          `https://newsapi.org/v2/top-headlines?country=us&category=${categoryToUse}&pageSize=10&apiKey=055e28d93abb4f059730b9b7c29a39fd`
+          `https://newsapi.org/v2/top-headlines?country=us&category=${categoryToUse}&pageSize=10&apiKey=${API_KEY}`
         );
 
         const data = response.data;

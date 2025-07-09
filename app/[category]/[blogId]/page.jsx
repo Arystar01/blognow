@@ -18,7 +18,7 @@ const Page = () => {
 const [liked, setLiked] = useState(false);
 const [likesCount, setLikesCount] = useState(blogDetails?.likes || 0); // Optional if you fetch likes from backend
 
-
+const API_KEY = process.env.NEXT_PUBLIC_NEWS_API_KEY;
 useEffect(() => {
     const fetchBlog = async () => {
       try {
@@ -40,7 +40,7 @@ useEffect(() => {
     const fetchTopHeadlines = async () => {
       try {
         const res = await axios.get(
-          `https://newsapi.org/v2/top-headlines?q=${blogDetails.title}&apiKey=055e28d93abb4f059730b9b7c29a39fd`
+          `https://newsapi.org/v2/top-headlines?q=${blogDetails.title}&apiKey=${API_KEY}` // Use your environment variable for the API key
         );
         if (res.status === 200) {
           setTopHeadlines(res.data.articles.slice(0, 5));

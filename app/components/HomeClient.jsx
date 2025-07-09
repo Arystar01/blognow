@@ -5,6 +5,8 @@ import axios from "axios";
 import BlogCart from "./BlogCart";
 import Footer from "./Footer";
 import LoaderPage from "./LoaderPage";
+import { configDotenv } from "dotenv";
+configDotenv();
 
 export default function HomeClient({ user }) {
   const [blogList, setBlogList] = useState([]);
@@ -13,12 +15,18 @@ export default function HomeClient({ user }) {
   const [popularNews, setPopularNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(10);
+  const API_KEY = process.env.NEXT_PUBLIC_NEWS_API_KEY;
+
 
   useEffect(() => {
     const fetchNewsAPI = async () => {
       try {
+        console.log("Fetching news from NewsAPI...");
+
+
+        // console.log("API_KEY:", API_KEY);
         const res = await axios.get(
-          `https://newsapi.org/v2/top-headlines?country=us&language=en&pageSize=10&apiKey=055e28d93abb4f059730b9b7c29a39fd`
+          `https://newsapi.org/v2/top-headlines?country=us&language=en&pageSize=10&apiKey=${API_KEY}`
         );
         const data = res.data.articles;
         if (data && data.length > 0) {
