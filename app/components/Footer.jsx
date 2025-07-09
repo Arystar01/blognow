@@ -4,7 +4,7 @@ import { FaInstagram, FaTelegram, FaWhatsapp } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 // import DarkThem from "../../public/DarkThem.png"; 
-import LightTheme from "../../public/LightTheme.png";
+// import LightTheme from "../../public/LightTheme.png";
 
 const Footer = () => {
     const navLinks = [
@@ -26,7 +26,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
         {/* Logo & About */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left gap-4">
-          <Image src={LightTheme} alt="Logo" width={96} height="auto" />
+          {/* <Image src={LightTheme} alt="Logo" width={96} height="auto" /> */}
           <h1 className="text-3xl font-bold">BlogNow</h1>
           <p className="text-gray-400 text-sm">
             BlogNow is your go-to platform for fresh blogs and breaking headlines across culture, science, politics, travel, and more. Our mission is to inform, inspire, and ignite meaningful conversations—one article at a time.
