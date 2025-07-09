@@ -5,8 +5,8 @@ import axios from "axios";
 import BlogCart from "./BlogCart";
 import Footer from "./Footer";
 import LoaderPage from "./LoaderPage";
-import { configDotenv } from "dotenv";
-configDotenv();
+// import { configDotenv } from "dotenv";
+// configDotenv();
 
 export default function HomeClient({ user }) {
   const [blogList, setBlogList] = useState([]);
