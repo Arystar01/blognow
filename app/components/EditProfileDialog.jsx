@@ -79,7 +79,7 @@ const EditProfileDialog = ({ open, onOpenChange, initialData, onProfileUpdated }
           },
         }
       );
-      console.log("Profile updated:", res.data);
+      // console.log("Profile updated:", res.data);
       onOpenChange(false); // Close the dialog
       if (onProfileUpdated) {
         onProfileUpdated(res.data.user); // Pass the updated user data back to parent

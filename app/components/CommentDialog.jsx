@@ -12,7 +12,7 @@ const CommentDialog = ({ props }) => {
 
   const { blogId } = props;
 
-  useEffect(() => {
+  useEffect( () => {
     const fetchComments = async () => {
       const res= await axios.get(`/api/comment/get/${blogId}`);
       if (res.status !== 200) {

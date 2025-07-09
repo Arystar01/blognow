@@ -14,8 +14,8 @@ export async function POST(request, { params }) {
         { status: 401 }
       );
     }
-    console.log("User ID:", userId);
-    console.log(blogId, content);
+    // console.log("User ID:", userId);
+    // console.log(blogId, content);
     const user = await User.findOne({ clerkID: userId });
     if (!user) {
       return NextResponse.json(

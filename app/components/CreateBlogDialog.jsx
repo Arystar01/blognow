@@ -1,5 +1,5 @@
 // components/CreateBlogDialog.jsx
-"use client"; // This component needs to be a client component
+"use client";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -10,7 +10,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"; // Adjust path if necessary
+} from "@/components/ui/dialog";
 
 const CreateBlogDialog = ({ open, onOpenChange, onBlogCreated }) => {
   const [BlogData, setBlogData] = useState({
@@ -18,12 +18,11 @@ const CreateBlogDialog = ({ open, onOpenChange, onBlogCreated }) => {
     content: "",
     category: "",
     breaking: false,
-    MainPicture: null, // Holds the File object
+    MainPicture: null,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Reset form data when dialog opens or closes
   useEffect(() => {
     if (!open) {
       setBlogData({
@@ -33,7 +32,7 @@ const CreateBlogDialog = ({ open, onOpenChange, onBlogCreated }) => {
         breaking: false,
         MainPicture: null,
       });
-      setError(null); // Clear previous errors
+      setError(null);
     }
   }, [open]);
 
@@ -48,7 +47,7 @@ const CreateBlogDialog = ({ open, onOpenChange, onBlogCreated }) => {
   const handleFileChangeBlog = (e) => {
     setBlogData((prev) => ({
       ...prev,
-      MainPicture: e.target.files[0], // Store the File object
+      MainPicture: e.target.files[0],
     }));
   };
 
@@ -68,13 +67,11 @@ const CreateBlogDialog = ({ open, onOpenChange, onBlogCreated }) => {
       }
 
       const res = await axios.post("/api/blog/create", formDataToSend);
-      console.log("Blog created:", res.data);
-      onOpenChange(false); // Close the dialog
+      onOpenChange(false);
       if (onBlogCreated) {
-        onBlogCreated(res.data.blog); // Pass the new blog data back to parent
+        onBlogCreated(res.data.blog);
       }
     } catch (err) {
-      console.error("Error in handleCreateBlog:", err.response?.data || err.message);
       setError(err.response?.data?.message || "Failed to create blog. Please try again.");
     } finally {
       setLoading(false);
@@ -94,10 +91,7 @@ const CreateBlogDialog = ({ open, onOpenChange, onBlogCreated }) => {
         </DialogDescription>
         <form onSubmit={handleCreateBlog} className="space-y-6 mt-4">
           <div>
-            <label
-              htmlFor="blogTitle"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="blogTitle" className="block text-sm font-medium text-gray-700 mb-1">
               Title
             </label>
             <input
@@ -111,42 +105,48 @@ const CreateBlogDialog = ({ open, onOpenChange, onBlogCreated }) => {
               required
             />
           </div>
+
           <div>
-            <label
-              htmlFor="blogContent"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="blogContent" className="block text-sm font-medium text-gray-700 mb-1">
               Content
             </label>
             <textarea
               id="blogContent"
+              name="content"
               value={BlogData.content}
               onChange={handleChangeBlog}
-              name="content"
+              rows={6}
               placeholder="Write your blog content here..."
-              className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-900 resize-y min-h-[120px]"
-              rows="6"
-              required
-            ></textarea>
-          </div>
-          <div>
-            <label
-              htmlFor="blogCategory"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Category
-            </label>
-            <input
-              id="blogCategory"
-              type="text"
-              value={BlogData.category}
-              onChange={handleChangeBlog}
-              name="category"
-              placeholder="Category (e.g., Tech, Travel)"
-              className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+              className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-900 resize-y"
               required
             />
           </div>
+
+          <div>
+            <label htmlFor="blogCategory" className="block text-sm font-medium text-gray-700 mb-1">
+              Category
+            </label>
+            <select
+              id="blogCategory"
+              name="category"
+              value={BlogData.category}
+              onChange={handleChangeBlog}
+              className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+              required
+            >
+              <option value="">Select a category</option>
+              <option value="Education">Education</option>
+              <option value="Health">Health</option>
+              <option value="Science">Science</option>
+              <option value="Technology">Technology</option>
+              <option value="Culture">Culture</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Food">Food</option>
+              <option value="Lifestyle">Lifestyle</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+
           <div className="flex items-center">
             <input
               id="breakingNews"
@@ -156,18 +156,13 @@ const CreateBlogDialog = ({ open, onOpenChange, onBlogCreated }) => {
               name="breaking"
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
             />
-            <label
-              htmlFor="breakingNews"
-              className="ml-2 block text-sm text-gray-900"
-            >
+            <label htmlFor="breakingNews" className="ml-2 block text-sm text-gray-900">
               Mark as Breaking News
             </label>
           </div>
+
           <div>
-            <label
-              htmlFor="mainPicture"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="mainPicture" className="block text-sm font-medium text-gray-700 mb-1">
               Main Picture
             </label>
             <input
@@ -183,9 +178,11 @@ const CreateBlogDialog = ({ open, onOpenChange, onBlogCreated }) => {
               </p>
             )}
           </div>
+
           {error && (
             <p className="text-red-500 text-sm text-center">{error}</p>
           )}
+
           <DialogFooter className="pt-4 flex justify-end">
             <button
               type="submit"
@@ -200,14 +197,7 @@ const CreateBlogDialog = ({ open, onOpenChange, onBlogCreated }) => {
                     fill="none"
                     viewBox="0 0 24 24"
                   >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path
                       className="opacity-75"
                       fill="currentColor"

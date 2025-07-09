@@ -6,8 +6,8 @@ export async function GET(req, { params }) {
   try {
     await connectDB();
 
-    const category = params.category?.toLowerCase(); // Normalize if stored as lowercase
-    console.log("Category requested:", category);
+    const category =   params.category?.toLowerCase(); // Normalize if stored as lowercase
+    // console.log("Category requested:", category);
 
     const dailyBlogs = await Blog.find({ category });
     const breakingBlogs = await Blog.find({ category, breaking: true });

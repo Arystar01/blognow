@@ -2,6 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import CommentDialog from "@/app/components/CommentDialog";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import axios from "axios";
+
+import LoaderPage from "@/app/components/LoaderPage";
 
 const Page = () => {
   const params = useParams();
@@ -9,30 +13,51 @@ const Page = () => {
   const category = params.category;
   const [readIcon, setReadIcon] = useState(false);
   const [blogDetails, setBlogDetails] = useState(null);
-  const [comments, setComments] = useState();
+  const [comments, setComments] = useState(false);
+  const [topHeadlines, setTopHeadlines] = useState([]);
+const [liked, setLiked] = useState(false);
+const [likesCount, setLikesCount] = useState(blogDetails?.likes || 0); // Optional if you fetch likes from backend
 
-  useEffect(() => {
-    try {
-      const fetchBlog = async () => {
-        const res = await fetch(`/api/blog/get/${blogId}`);
-        const data = await res.json();
+
+useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const res = await axios.get(`/api/blog/get/${blogId}`);
+        const data = res.data;
         if (data) {
           setBlogDetails(data.blog);
         }
-      };
-      fetchBlog();
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+      } catch (error) {
+        console.log("Failed to fetch blog:", error);
+      }
+    };
+    fetchBlog();
+  }, [blogId]);
+
+  useEffect(() => {
+    if (!blogDetails?.title) return;
+
+    const fetchTopHeadlines = async () => {
+      try {
+        const res = await axios.get(
+          `https://newsapi.org/v2/top-headlines?q=${blogDetails.title}&apiKey=055e28d93abb4f059730b9b7c29a39fd`
+        );
+        if (res.status === 200) {
+          setTopHeadlines(res.data.articles.slice(0, 5));
+        }
+      } catch (error) {
+        console.log("Failed to fetch top headlines:", error);
+      }
+    };
+    fetchTopHeadlines();
+  }, [blogDetails?.title]);
 
   const handleSpeakOut = () => {
     if (blogDetails?.content) {
       const fullContent =
-        "Title . " +
+        "Title. " +
         blogDetails.title +
-        ". " +
-        "Now Content - " +
+        ". Now Content - " +
         blogDetails.content;
       const word = new SpeechSynthesisUtterance(fullContent);
       word.lang = "en-US";
@@ -41,7 +66,7 @@ const Page = () => {
       word.pitch = 1;
 
       word.onend = () => {
-        console.log("✅ Speech ended.");
+        // console.log("✅ Speech ended.");
         setReadIcon(false);
       };
       setReadIcon(true);
@@ -51,23 +76,19 @@ const Page = () => {
 
   const stopSpeaking = () => {
     speechSynthesis.cancel();
+    setReadIcon(false);
   };
 
-  const handleCommentDialog = () => {
-    console.log("Open comment dialog");
-  };
-
-  if (!blogDetails) return <div className="text-center mt-10">Loading...</div>;
+  if (!blogDetails) return <LoaderPage/>;
 
   return (
-    <div className="w-full bg-gray-100 text-black">
-      {/* Hero section with background image */}
-      <div className="relative w-screen h-96 sm:h-[700px] flex justify-center items-center overflow-hidden">
+    <div className="w-full pb-4  bg-gradient-to-r from-blue-200 to-purple-200 text-black">
+      {/* Hero section */}
+      <div className="relative w-full h-96 sm:h-[700px] flex justify-center items-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-80"
           style={{ backgroundImage: `url(${blogDetails.MainPicture})` }}
         ></div>
-
         <div className="relative z-10 text-white text-center px-4 sm:px-0">
           <h1 className="text-xl sm:text-2xl font-semibold">{blogDetails.authorname}</h1>
           <h2 className="text-3xl sm:text-5xl font-bold mt-4">{blogDetails.title}</h2>
@@ -77,10 +98,10 @@ const Page = () => {
         </div>
       </div>
 
-      {/* Blog body and sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-6 sm:px-12 py-12 max-w-7xl mx-auto">
-        {/* Main Content */}
-        <div className="col-span-1 lg:col-span-2 bg-white rounded-lg shadow-md p-6">
+      {/* Content & Sidebar */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 px-6 sm:px-12 py-12  mx-auto">
+        {/* Main Blog Content */}
+        <div className="col-span-1 lg:col-span-3 bg-white rounded-lg shadow-md p-6">
           <div className="flex gap-4 mb-6">
             <button
               onClick={handleSpeakOut}
@@ -103,34 +124,56 @@ const Page = () => {
           </div>
 
           <div className="flex justify-between items-center mt-8 pt-4 border-t">
-            <button className="text-blue-600 hover:underline">👍 Like</button>
+            <button
+              onClick={() => {
+                setLiked(!liked);
+                setLikesCount((prev) => liked ? prev - 1 : prev + 1);
+                // Optional: send to backend here
+              }}
+              className="flex items-center gap-2 text-red-500 hover:text-red-600 transition    "
+            >
+              {liked ? (
+                <AiFillHeart className="text-xl" />
+              ) : (
+                <AiOutlineHeart className="text-xl" />
+              )}
+              <span className="text-sm">{likesCount}</span>
+            </button>
             <button
               onClick={() => setComments(!comments)}
-              className="text-blue-600 hover:underline"
+              className="text-blue-600 hover:text-xl "
             >
               💬 Comment
             </button>
-            <button className="text-blue-600 hover:underline">🔗 Share</button>
+            <button className="text-blue-600  hover:text-xl">🔗 Share</button>
           </div>
 
           {comments && <CommentDialog props={{ blogId }} />}
         </div>
 
-        {/* Sidebar / Breaking News */}
-        <div className="col-span-1 hidden lg:block">
+        {/* Sidebar Headlines */}
+        <div className="col-span-1">
           <div className="sticky top-24 bg-white p-4 rounded shadow-md">
-            <div className="relative mb-4">
-              <span className="absolute top-2 left-2 bg-orange-600 text-white text-xs px-2 py-1 font-bold rounded">
-                BREAKING
-              </span>
-              <img
-                src="https://via.placeholder.com/300x300"
-                alt="Breaking"
-                className="w-full h-auto rounded"
-              />
-            </div>
-            <p className="text-sm text-gray-700">
-              Stay tuned for the latest science updates, innovations, and tech insights.
+            <h3 className="text-lg font-bold mb-4 text-indigo-700">Latest Headlines</h3>
+            {topHeadlines.length === 0 ? (
+              <p className="text-gray-500">No headlines found.</p>
+            ) : (
+              topHeadlines.map((article, index) => (
+                <div key={index} className="mb-4">
+                  <a
+                    href={article.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block hover:text-indigo-600"
+                  >
+                    <h4 className="text-md font-semibold line-clamp-2">{article.title}</h4>
+                  </a>
+                  <p className="text-gray-600 text-sm line-clamp-2">{article.description}</p>
+                </div>
+              ))
+            )}
+            <p className="text-sm text-gray-600 mt-6 italic">
+              Stay informed with real-time news powered by NewsAPI.
             </p>
           </div>
         </div>

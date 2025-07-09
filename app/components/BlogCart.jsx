@@ -14,7 +14,7 @@ const BlogCart = ({
   _id,
 }) => {
   return (
-    <div className="w-full bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col gap-4">
+    <div className="w-full bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col gap-4 h-min">
       {/* Metadata row */}
       <div className="flex justify-between text-sm text-gray-500">
         <span className="capitalize">
@@ -24,7 +24,7 @@ const BlogCart = ({
       </div>
 
       {/* Title */}
-      <h2 className="text-2xl font-bold text-gray-900 line-clamp-2">{title}</h2>
+      <h2 className="text-2xl font-bold text-gray-900 line-clamp-1">{title}</h2>
 
       {/* Blog Image */}
       {MainPicture && (
@@ -40,12 +40,12 @@ const BlogCart = ({
       )}
 
       {/* Content Preview */}
-      <p className="text-gray-700 text-base sm:text-lg line-clamp-3 leading-relaxed">
-        {content}
-      </p>
+     <p className="text-gray-700 text-base sm:text-lg line-clamp-1 leading-relaxed  ">
+  {content}
+</p>
 
       {/* Author Info */}
-      <div className="flex items-center gap-3  border-t border-gray-200 pt-4 text-sm text-gray-600">
+      <div className="flex items-center gap-3   border-t border-gray-200 pt-4 text-sm text-gray-600">
         <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-300">
           <img
             src={ProfilePictue || '/default-avatar.png'}

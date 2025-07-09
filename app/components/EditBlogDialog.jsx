@@ -83,7 +83,7 @@ const EditBlogDialog = ({ open, onOpenChange, blogData, onBlogUpdated }) => {
           },
         }
       );
-      console.log("Blog updated:", res.data);
+      // console.log("Blog updated:", res.data);
       onOpenChange(false);
       if (onBlogUpdated) {
         onBlogUpdated(res.data.blog);

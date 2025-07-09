@@ -18,7 +18,7 @@ export async function POST(req) {
     await connectDB();
 
     const { userId } =  await auth(); // Clerk's auth() is synchronous in App Router route handlers
-    console.log("userId:", userId);
+    // console.log("userId:", userId);
 
     if (!userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

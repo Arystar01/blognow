@@ -10,22 +10,25 @@ import { FaUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-const { user } = useUser();
-const { signOut } = useClerk();
+  const { user } = useUser();
+  const { signOut } = useClerk();
 
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
 
   const navLinks = [
-    'Home',
-    'Culture',
-    'Economy',
-    'Politics',
-    'Science',
-    'Technology',
-    'Travel',
-    'World',
-    'About',
-  ]
+  'Home',
+  'Education',
+  'Health',
+  'Science',
+  'Technology',
+  'Culture',
+  'Entertainment',
+  'Food',
+  'Lifestyle',
+  'Others',
+  'About',
+];
+
 
   const toggleMobileNav = () => setIsMobileNavOpen(!isMobileNavOpen)
 
@@ -40,7 +43,13 @@ const { signOut } = useClerk();
         {/* Desktop Navigation */}
         <ul className="hidden md:flex md:text-xl gap-6 text-2xl font-medium">
           {navLinks.map(link => {
-            const path = link.toLowerCase() === 'home' ? '/' : `/${link.toLowerCase()}`
+            const path =
+              link.toLowerCase() === 'home'
+                ? '/'
+                : link.toLowerCase() === 'about'
+                  ? '/about-us' // ✅ Change to your custom internal/external path
+                  : `/${link.toLowerCase()}`
+
             return (
               <li key={link}>
                 <Link href={path} className="hover:text-[#6c47ff] transition">

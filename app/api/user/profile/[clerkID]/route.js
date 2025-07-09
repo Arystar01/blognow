@@ -16,7 +16,7 @@ export async function GET(req, { params }) {
     await connectDB();
 
     const { clerkID } = await params;
-    console.log("Fetching user for:", clerkID);
+    // console.log("Fetching user for:", clerkID);
 
     const user = await User.findOne({ clerkID });
 

@@ -26,6 +26,6 @@ export async function DELETE(request, { params }) {
         await blog.save();
         return NextResponse.json({ message: "Comment deleted successfully" }, { status: 200 });     
     } catch (error) {
-        console.log("Error deleting comment:", error);  
+        // console.log("Error deleting comment:", error);  
     }
 }

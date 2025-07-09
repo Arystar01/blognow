@@ -12,6 +12,8 @@
   "dependencies": {
     "@clerk/nextjs": "^6.23.2",
     "@radix-ui/react-dialog": "^1.1.14",
+    "@tiptap/react": "^2.25.0",
+    "@tiptap/starter-kit": "^2.25.0",
     "axios": "^1.10.0",
     "cloudinary": "^2.7.0",
     "formidable": "^3.5.4",
@@ -19,6 +21,7 @@
     "mongoose": "^8.16.1",
     "next": "15.3.4",
     "node-cron": "^4.2.0",
+    "quill": "^2.0.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icon": "^1.0.0",

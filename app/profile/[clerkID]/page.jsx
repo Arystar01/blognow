@@ -10,6 +10,8 @@ import EditProfileDialog from '../../components/EditProfileDialog';
 import CreateBlogDialog from '../../components/CreateBlogDialog';
 import EditBlogDialog from '../../components/EditBlogDialog';
 import DeleteDialogBlog from '../../components/DeleteDialogBlog';
+import { set } from 'mongoose';
+import LoaderPage from '@/app/components/LoaderPage';
 
 const Page = () => {
   const { user, isLoaded } = useUser();
@@ -28,9 +30,11 @@ const Page = () => {
 
   const [blogToEdit, setBlogToEdit] = useState(null);
   const [blogIdToDelete, setBlogIdToDelete] = useState(null);
+  const [loading, setLoading  ]=useState(false);
 
   const fetchUser = useCallback(async () => {
     try {
+      setLoading(true);
       const res = await axios.get(`/api/user/profile/${clerkID}`);
       const data = res.data.user;
       if (data) setuserProfile(data);
@@ -38,21 +42,29 @@ const Page = () => {
     } catch (error) {
       console.error('Error fetching user profile:', error);
     }
+    finally {
+      setLoading(false);
+    }
   }, [clerkID, userClerk]);
 
   const fetchBlogs = useCallback(async () => {
     try {
+      setLoading(true);
       const res = await axios.get(`/api/blog/byuser/${clerkID}`);
       setBlogList(res.data.blogs);
     } catch (err) {
       console.error('Failed to fetch blogs:', err);
+    }finally {
+      setLoading(false);
     }
   }, [clerkID]);
 
   useEffect(() => {
     if (clerkID && isLoaded) {
+      
       fetchUser();
       fetchBlogs();
+    
     }
   }, [clerkID, isLoaded, fetchUser, fetchBlogs]);
 
@@ -100,10 +112,12 @@ const Page = () => {
     }
   };
 
+  if(loading) return <LoaderPage/>;
   return (
-    <div className="w-full min-h-screen bg-gradient-to-br from-gray-100 via-blue-100 to-purple-100">
+    <div className="w-full min-h-screen bg-gradient-to-br border-t-zinc-200 from-gray-100 via-blue-100 to-purple-100 pb-4">
       {/* Navbar */}
-      <div className="fixed top-24 left-0 right-0 z-50 flex justify-between items-center px-8 text-center text-2xl bg-black text-white w-full h-20 shadow-md">
+      <div className="fixed top-26 left-0 right-0 z-50  border-t-2 border-zinc-200
+ flex justify-between items-center px-8 text-center text-2xl bg-black text-white w-full h-20 shadow-md">
         <div className="font-semibold text-xl md:text-2xl">BLOG PROFILE</div>
         <div className="flex items-center gap-4">
           <span className="mr-2 text-base hidden sm:inline text-gray-300">
