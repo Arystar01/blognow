@@ -22,13 +22,9 @@ export default function HomeClient({ user }) {
     const fetchNewsAPI = async () => {
       try {
         console.log("Fetching news from NewsAPI...");
-
-
-        // console.log("API_KEY:", API_KEY);
-        const res = await axios.get(
-          `https://newsapi.org/v2/top-headlines?country=us&language=en&pageSize=10&apiKey=${API_KEY}`
-        );
+        const res = await axios.post('/api/newsapi/world');
         const data = res.data.articles;
+        console.log("NewsAPI response:", data);
         if (data && data.length > 0) {
           setTopHeadline(data[0]);
           setPopularNews(data.slice(1));
@@ -142,6 +138,7 @@ export default function HomeClient({ user }) {
                 ProfilePictue={blog.authorProfilePicture}
                 breaking={blog.breaking}
                 MainPicture={blog.MainPicture}
+                authorClerkId={blog.authorClerkId}
               />
             ))}
           </div>

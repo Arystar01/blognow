@@ -12,6 +12,7 @@ const BlogCart = ({
   breaking,
   MainPicture,
   _id,
+  authorClerkId,
 }) => {
   return (
     <div className="w-full bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col gap-4 h-min">
@@ -40,12 +41,12 @@ const BlogCart = ({
       )}
 
       {/* Content Preview */}
-     <p className="text-gray-700 text-base sm:text-lg line-clamp-1 leading-relaxed  ">
-  {content}
-</p>
+      <p className="text-gray-700 text-base sm:text-lg line-clamp-1 leading-relaxed  ">
+        {content}
+      </p>
 
       {/* Author Info */}
-      <div className="flex items-center gap-3   border-t border-gray-200 pt-4 text-sm text-gray-600">
+      <div className="flex items-center gap-3 border-t border-gray-200 pt-4 text-sm text-gray-600">
         <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-300">
           <img
             src={ProfilePictue || '/default-avatar.png'}
@@ -54,10 +55,16 @@ const BlogCart = ({
           />
         </div>
         <div className="flex flex-col">
-          <span className="font-semibold text-gray-800">{author}</span>
+          <Link
+            href={`/profile/${authorClerkId}`}
+            className="font-semibold text-blue-700 hover:underline"
+          >
+            {author}
+          </Link>
           <span className="text-xs text-gray-500">{date}</span>
         </div>
       </div>
+
     </div>
   );
 };

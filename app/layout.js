@@ -25,15 +25,15 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-                 
-          <Navbar />
-      
 
-        {/* 👇 Main content with top padding to avoid being hidden */}
-        <main className="pt-28">
-          {children}
-        </main>
-    <Footer/>
+          <Navbar />
+
+
+          {/* 👇 Main content with top padding to avoid being hidden */}
+          <main className="pt-28">
+            {children}
+          </main>
+          <Footer />
 
         </body>
       </html>

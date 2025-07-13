@@ -1,12 +1,11 @@
 import { clerkMiddleware } from '@clerk/nextjs/server';
 
-export default clerkMiddleware();
+export default clerkMiddleware({
+  publicRoutes: [], // 👈 no routes are public
+});
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // Always run for API routes
-    '/(api|trpc)(.*)',
+    '/((?!_next/|favicon\\.ico|.*\\.(?:png|jpg|jpeg|webp|gif|svg|css|js|woff2?|ttf|eot|otf|mp4|mp3|json|txt)).*)',
   ],
 };

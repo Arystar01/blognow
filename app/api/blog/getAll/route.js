@@ -5,6 +5,8 @@ export async function GET(req, res) {
     try {
         await connectDB();
         const blogs = await Blog.find({});
+        //  populate the author field with user data, which contains, authorusername, authorlerkId
+
         return NextResponse.json({ blogs }, { status: 200 });
     }
     catch (error) {

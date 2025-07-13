@@ -7,8 +7,10 @@ function page() {
     const handleClick = async () => {
         // console.log("Button clicked!");
         try {
-            const res= await  axios.get( `https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=${API_KEY}`);
-            // console.log("res" ,res);
+            const res = await axios.post('/api/newsapi/source', {
+      source: "bbc-news",
+    });
+        // console.log("res" ,res);
         } catch (error) {
             console.error("Error fetching news:", error);
         }
