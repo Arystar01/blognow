@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# 📝 BlogNow
 
-First, run the development server:
+**BlogNow** is a dynamic multi-user blogging platform where anyone can write and publish blogs in real-time, while also staying updated with the latest **world trending news** — with an option to **listen** to the news through voice narration.
+
+<img width="1836" height="866" alt="image" src="https://github.com/user-attachments/assets/89935e59-2330-4c33-b988-b3daf6cd78d8" />
+<img width="1827" height="892" alt="image" src="https://github.com/user-attachments/assets/c0b1006f-1989-4fb1-ba86-09256f0ea66b" />
+
+<!-- Optional: Add an image -->
+
+## 🚀 Features
+
+* ✍️ **Create & Share Blogs**: Users can register and start writing blogs instantly.
+* 🌍 **Trending News Feed**: Integrated live news feed using News API.
+* 🔊 **Listen to News**: Text-to-speech functionality to listen to the latest headlines.
+* 🔐 **Authentication**: Secure sign-in and sign-up for every user.
+* 👤 **User Profiles**: View blogs by specific users and manage your own profile.
+* ❤️ **Likes & Saves**: Like and save blogs for later.
+* 🧠 **Modern UI/UX**: Sleek, responsive interface built for all screen sizes.
+
+## 🧑‍💻 Tech Stack
+
+### Frontend:
+
+* **Next.js**
+* **Tailwind CSS**
+* **Shadcn/ui** (for dialogs, modals, and form components)
+
+### Backend:
+
+* **Node.js**
+* **Express.js**
+* **MongoDB** with **Mongoose**
+
+### APIs & Auth:
+
+* **Clerk** (for authentication)
+* **NewsAPI.org** (for latest headlines)
+* **OpenAI / Google Text-to-Speech** (for voice narration)
+
+---
+
+## 🖼️ Live Demo
+
+🌐 [Visit BlogNow](https://blognow-one.vercel.app)
+Video [https://youtu.be/_P8TshMPyZE]
+
+---
+
+## 📦 Installation & Setup
 
 ```bash
+# 1. Clone the repo
+git clone https://github.com/your-username/blognow.git
+cd blognow
+
+# 2. Install dependencies
+npm install
+
+# 3. Set up environment variables
+cp .env.example .env
+# Add your MongoDB URI, Clerk Keys, and NewsAPI Key
+
+# 4. Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📂 Folder Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+blognow/
+├── app/                   # Next.js App Directory
+├── components/            # Reusable UI Components
+├── models/                # Mongoose Models (User, Blog, Comment)
+├── lib/                   # Utility functions
+├── public/                # Static assets
+├── styles/                # Global styles
+└── .env.example           # Environment variable template
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔐 Environment Variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Create a `.env` file and add the following:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```env
+MONGODB_URI=your_mongodb_uri
+CLERK_SECRET_KEY=your_clerk_key
+NEWS_API_KEY=your_newsapi_key
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📸 Screenshots
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> Add some screenshots here showing:
+
+* Blog creation
+* Trending news section
+* Voice playback feature
+* Responsive mobile view
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! If you'd like to improve or extend BlogNow:
+
+1. Fork the repo
+2. Create your feature branch (`git checkout -b feature-name`)
+3. Commit your changes (`git commit -m 'Add some feature'`)
+4. Push to the branch (`git push origin feature-name`)
+5. Open a Pull Request
+
+---
+
+## 📬 Contact
+
+For questions, suggestions, or collaboration:
+
+* 🧑 Aryan Rastogi
+
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
